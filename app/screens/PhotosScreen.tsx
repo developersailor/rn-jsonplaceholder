@@ -1,17 +1,16 @@
 import React, { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
 import { AppStackScreenProps } from "app/navigators"
 import { Screen, Text, AutoImage, ListView } from "app/components"
 import { useStores } from "app/models/helpers/useStores"
 import { Photo } from "app/models"
-import { View } from "react-native"
+import { ImageStyle, StyleProp, View, ViewStyle } from "react-native"
 
 interface PhotosScreenProps extends AppStackScreenProps<"Photos"> {}
 
 export const PhotosScreen: FC<PhotosScreenProps> = observer(function PhotosScreen() {
-  const [refreshing, setRefreshing] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [refreshing] = React.useState(false)
+  const [, setIsLoading] = React.useState(false)
   const { photoStore } = useStores()
 
   useEffect(() => {
@@ -42,7 +41,7 @@ interface PhotoCardProps {
 const PhotoCard: FC<PhotoCardProps> = observer(function PhotoCard({ photo }) {
   return (
     <View>
-      <AutoImage style={{ width: 50, height: 50 }} src={photo.url} />
+      <AutoImage style={$image} src={photo.url} />
       <Text>{photo.title}</Text>
     </View>
   )
@@ -53,4 +52,9 @@ const $root: ViewStyle = {
 }
 const $flashListContentContainer: ViewStyle = {
   padding: 16,
+}
+const $image: StyleProp<ImageStyle> = {
+  justifyContent: "center",
+  width: 150,
+  height: 150,
 }
